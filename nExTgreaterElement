@@ -1,0 +1,34 @@
+STEP1 : CREATE A STACK WHICH WILL HELP IN TRACK OF THE GREATER ELEMENT AND A VECTOR WHICH WILL STORE THE GREATER ELEMENT IN REVERSE ORDER I.E WE HAVE TO REVERSE BEFORE RETURN
+STEP2 : PUSH LAST ELEMENT INTO THE STACK AND TREAVERSE FROM N-2 AND CHECK IF THE TOP OF THE STACK IS LESS THAN THE CURRENT ELEMENT IF YES THEN POP UNTIL THE GREATER ELEMENT NOT COME ONTO THE STACK
+STEP3 : IF THERE IS NOT A LESS ELEMENT THEN CURRENT ELEMENT IN THE STACK THAT MUST BE THE NEXT GREATER ELEMENT OF THE PREVIOUS ELEMENT SO WE PUSH IT INTO THE VECTOR AND PUSH THE CURRENT ELEMENT INTO THE STACK 
+STEP4 : SO OUR ANS WILL BE IN REVERSE ORDER SO WE MUST REVERSE THE ARRAY BEFORE RETURNING IT TO THE FUNCTION
+#include<bits/stdc++.h>
+using namespace std;
+vector<int>nextG(int arr[],int n){
+    vector<int>ans;
+    stack<int>st;
+    st.push(arr[n-1]);
+    ans.push_back(-1);
+    for(int i = n-2; i>=0; i--){
+        while(!st.empty() && st.top() <= arr[i]){
+            st.pop();
+        }
+        int ng = st.empty() ? -1 : st.top();
+        ans.push_back(ng);
+        st.push(arr[i]);
+    }
+    reverse(ans.begin(),ans.end());
+    return ans;
+}
+int main(){
+   int n;
+   cin>>n;
+   int arr[n];
+   for(int i = 0; i<n; i++){
+    cin>>arr[i];
+   }
+   vector<int>ans = nextG(arr,n);
+   for(int i = 0; i<ans.size(); i++){
+    cout<<ans[i]<<" ";
+   }
+}
