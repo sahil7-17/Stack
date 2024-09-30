@@ -1,0 +1,27 @@
+Intution : It's  like next greater element problem where we used stack to find the next greater element here we will store the index of the element into the stack
+and we traverse from the right if the stack is empty means there is not an element which is greater than the current element so we put 0 into the ans vector at that index 
+and if there is greater element then we need only the count of the elements which are smaller than or equal to the current element
+
+
+class Solution {
+public:
+    vector<int> dailyTemperatures(vector<int>& temp) {
+        int n = temp.size();
+        vector<int> ans(n);
+        stack<int> st;
+
+        for (int i = n - 1; i >= 0; i--) {
+            while (!st.empty() && temp[i] >= temp[st.top()]) {
+                st.pop();
+            }
+            if (st.empty()) {
+                ans[i] = 0;
+            }
+            else{
+                ans[i] = st.top() - i;
+            }
+            st.push(i);
+        }
+        return ans;
+    }
+};
