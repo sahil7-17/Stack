@@ -1,0 +1,29 @@
+//Intution : The approach is same as next Greater element but here we first find all the next greater element for nums2 because the nums1 is subset of nums2
+we will store the nums2 element with coresponding next greater element in a map 
+in Last we just traverse nums1 and search nums1 element as key into the map to find the ng that is stored into the map 
+
+
+
+class Solution {
+public:
+    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+        int n = nums2.size();
+        unordered_map<int,int>mp; // pair of nums 2 element with the NG;
+        stack<int>st;
+        vector<int>ans;
+        for(int i = n-1; i>=0; i--){
+            while(!st.empty() && st.top() <= nums2[i]){
+                st.pop();
+            }
+            int ng = (st.empty()) ? - 1 : st.top();
+            mp.insert({nums2[i],ng});
+            st.push(nums2[i]);
+        }
+        //Extracting ng by key that are stored before
+        for(auto x : nums1){
+            ans.push_back(mp[x]);  //mp[i] give the  corresponding value 
+        }
+        return ans;
+    }
+
+};
