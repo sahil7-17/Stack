@@ -1,0 +1,34 @@
+Intution : We will use monotonic stack we want the minimum number so we will follow the property of monotonic decreasing order 
+here we pop the elememt from the stack  that is greater than the current element and decrease the  size of k becuase we have to only delete k elements 
+step 2 : to avoid preceeding zero ex 0200 we only push the element 0 when the stack is not empty 
+step 3: here is one edge case 1234 and we have to delete k = 2 elements and return the minimum number so above approach won't be sufficient to tackle the edge case 
+so we check in the while loop that the k element is greater than 0 if yes then we remove the elements until k is not 0 
+
+
+
+class Solution {
+public:
+    string removeKdigits(string num, int k) {
+        int n = num.length();
+        string ans = ""; // it will act like a stack
+        for (int i = 0; i < n; i++) {
+            while (ans.length() > 0 && ans.back() > num[i] && k > 0) {
+                ans.pop_back();
+                k--;
+            }
+            if (ans.length() > 0 || num[i] != '0') { // to avoid preceeding zero
+                ans.push_back(num[i]);
+            }
+        }
+
+        while (k > 0 && ans.length() > 0 ) {
+            ans.pop_back();
+            k--;
+        }
+        if (ans == "") {
+            return "0";
+        }
+
+        return ans;
+    }
+};
